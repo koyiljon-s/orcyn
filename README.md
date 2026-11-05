@@ -1,4 +1,4 @@
-# Quicksilicon
+# Orcyn
 
 **GPU-accelerated Zero-Knowledge Proof generation in Rust**
 
