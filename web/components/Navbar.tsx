@@ -42,7 +42,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-3 justify-self-end">
               <Link
-                href="https://scaleworks.tech"
+                href="/get-started"
                 className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#36f5a2] hover:bg-white hover:text-[#171717] hover:border-white text-white font-medium text-lg rounded-full px-4 py-2 transition-colors"
               >
                 Get started
