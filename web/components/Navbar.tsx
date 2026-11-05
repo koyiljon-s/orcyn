@@ -7,7 +7,7 @@ import Link from "next/link";
 const navLinks = [
   { label: "Whitepaper", href: "/whitepaper" },
   { label: "Solutions", href: "/solutions" },
-  { label: "Documentation", href: "/docs" },
+  { label: "Technology", href: "/technology" },
 ];
 
 export default function Navbar() {
@@ -17,14 +17,14 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#02090a]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-[1fr_auto] md:grid-cols-[auto_auto_1fr] items-center gap-6 py-3.75">
+          <div className="grid grid-cols-[1fr_auto] md:grid-cols-[auto_auto_1fr] items-center gap-8 py-3.75">
             <Link
               href="/"
               aria-label="Orcyn home"
               className="inline-flex items-center justify-self-start"
             >
-              <span className="text-white flex text-3xl md:text-[1.82rem] font-bold tracking-[-0.04em] leading-none">
-                Orcyn
+              <span className="text-white italic flex text-3xl md:text-[2.02rem] font-bold tracking-[-0.04em] leading-none">
+                orcyn
               </span>
             </Link>
 
@@ -33,7 +33,7 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
-                  className="text-white font-medium text-lg px-1.5 py-1 rounded hover:bg-black/5 transition-colors"
+                  className="text-white font-medium text-lg px-1.5 py-1 rounded hover:text-[#9898a3] transition-colors"
                 >
                   {label}
                 </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3 justify-self-end">
               <Link
                 href="https://scaleworks.tech"
-                className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#36f5a2] hover:bg-[#171717] text-white font-medium text-lg rounded-full px-4 py-2 transition-colors"
+                className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#36f5a2] hover:bg-white hover:text-[#171717] hover:border-white text-white font-medium text-lg rounded-full px-4 py-2 transition-colors"
               >
                 Get started
               </Link>
