@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="py-42">
+    <section className="py-48 bg-[#02090a]">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-white flex flex-col text-5xl md:text-6xl font-base tracking-[-0.04em] leading-[1.05] pt-16 md:pt-24 pb-6">
           Prove computation
