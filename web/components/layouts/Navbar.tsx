@@ -7,7 +7,7 @@ import Link from "next/link";
 const navLinks = [
   { label: "Whitepaper", href: "/whitepaper" },
   { label: "Solutions", href: "/solutions" },
-  { label: "Technology", href: "/technology" },
+  { label: "Docs", href: "/docs" },
 ];
 
 export default function Navbar() {
