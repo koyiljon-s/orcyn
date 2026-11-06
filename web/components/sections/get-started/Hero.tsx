@@ -1,16 +1,65 @@
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function Hero() {
   return (
-    <section className="bg-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 items-center py-32 md:py-78">
+    <section className="bg-[#060e0f]">
+      <div className="mx-auto grid max-w-7xl items-center py-32 md:grid md:grid-cols-[60%_40%] md:py-62">
+        {/* Left side */}
         <div>
-          <h1 className="text-[#1e2026] text-5xl md:text-[82px] font-bold tracking-[-0.04em] leading-[1.05]">
+          <h1 className="text-5xl font-normal leading-[1.05] tracking-[-0.04em] text-white md:text-[82px]">
             Authenticate CLI
           </h1>
-          <p className="text-[#1e2026] text-lg md:text-[44px] font-semibold leading-[1.6] max-w-xl">
+
+          <p className="mt-4 max-w-xl text-lg font-base leading-relaxed text-white md:text-4xl">
             Generate your access token
           </p>
         </div>
-        <div>{/* Right side — intentionally empty for now */}</div>
+
+        {/* Right side */}
+        <div>
+          <Card className="bg-white text-[#0a0a0a] shadow-2xl">
+            <CardHeader className="space-y-2">
+              <CardTitle className="text-2xl font-medium text-center">
+                Connect to Orcyn
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <form className="space-y-5">
+                <div className="space-y-2">
+                  <Input
+                    type="name"
+                    placeholder="Name"
+                    className="h-12 border border-[#bdc6c7] bg-white/5 text-black placeholder:text-[#545d5e]"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    className="h-12 border border-[#bdc6c7] bg-white/5 text-black placeholder:text-[#545d5e]"
+                  />
+                </div>
+
+                <Button className="h-12 w-full bg-[#0a0a0a] text-white hover:bg-black/90">
+                  Generate token
+                </Button>
+
+              
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );
