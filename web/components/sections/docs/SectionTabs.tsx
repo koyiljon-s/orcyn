@@ -16,7 +16,7 @@ export default function SectionTabs() {
   const pathname = usePathname();
 
   return (
-    <div className="border-b border-[#e5e7eb] bg-white">
+    <div className="border-b border-[#edf1f5] bg-white">
       <nav
         aria-label="Documentation sections"
         className="mx-auto flex max-w-384 items-center gap-6 px-6"
@@ -31,7 +31,7 @@ export default function SectionTabs() {
               href={tab.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "-mb-px border-b py-1 text-[15px] font-medium transition-colors",
+                "-mb-px border-b py-1.5 text-[15px] font-medium transition-colors",
                 isActive
                     ? "border-[#004bed] text-[#004bed]"
                     : "border-transparent text-[#26282e] hover:border-[#004bed]",
