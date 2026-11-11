@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { SearchBar } from "@/components/ui/searchbar";
 import { IconChevronRight } from '@tabler/icons-react';
 
 
@@ -23,6 +24,13 @@ export default function Navbar() {
                 <span className="not-italic text-[#0051ff]">DOCS</span>
               </span>
             </Link>
+
+            <div className="flex flex-1 justify-center px-6">
+              <SearchBar
+                placeholder="Search..."
+                className="max-w-md"
+              />
+            </div>
 
             <Button
               variant="outline"
