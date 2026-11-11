@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white">
+      <header className="sticky top-0 z-50 bg-white">
         <div className="max-w-384 mx-auto">
           <div className="flex items-center justify-between py-3 px-6">
             <Link
