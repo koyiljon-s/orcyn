@@ -1,4 +1,8 @@
+use std::str::FromStr;
+
 use serde::{Deserialize, Serialize};
+
+use crate::ParseEnumError;
 
 /// Lifecycle of a proof request.
 ///
@@ -24,6 +28,19 @@ pub enum JobStatus {
 }
 
 impl JobStatus {
+    pub const ALL: [&'static str; 5] = ["queued", "assigned", "proving", "fulfilled", "failed"];
+
+    /// The string stored in the database. Matches the JSON (serde) name.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            JobStatus::Queued => "queued",
+            JobStatus::Assigned => "assigned",
+            JobStatus::Proving => "proving",
+            JobStatus::Fulfilled => "fulfilled",
+            JobStatus::Failed => "failed",
+        }
+    }
+
     /// Returns true if the job will never change again.
     pub fn is_terminal(self) -> bool {
         matches!(self, JobStatus::Fulfilled)
@@ -45,10 +62,42 @@ impl JobStatus {
     }
 }
 
+/// Enables `"queued".parse::<JobStatus>()`.
+impl FromStr for JobStatus {
+    type Err = ParseEnumError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "queued" => JobStatus::Queued,
+            "assigned" => JobStatus::Assigned,
+            "proving" => JobStatus::Proving,
+            "fulfilled" => JobStatus::Fulfilled,
+            "failed" => JobStatus::Failed,
+            _ => {
+                return Err(ParseEnumError {
+                    kind: "job status",
+                    value: s.to_string(),
+                    expected: &JobStatus::ALL,
+                });
+            }
+        })
+    }
+}
+
 // Unit tests live next to the code. Run with `cargo test`.
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn as_str_matches_json_and_parses_back() {
+        for name in JobStatus::ALL {
+            let status: JobStatus = name.parse().unwrap();
+            assert_eq!(status.as_str(), name);
+            assert_eq!(serde_json::to_string(&status).unwrap(), format!("\"{name}\""));
+        }
+        assert!("done".parse::<JobStatus>().is_err());
+    }
 
     #[test]
     fn happy_path_is_allowed() {

@@ -4,6 +4,7 @@ use tracing_subscriber::EnvFilter;
 
 use orcyn_api::config::Config;
 use orcyn_api::state::AppState;
+use orcyn_api::storage::ArtifactStore;
 use orcyn_api::{db, routes};
 
 #[tokio::main]
@@ -26,7 +27,12 @@ async fn main() -> anyhow::Result<()> {
     let db = db::connect(&config.database_url).await?;
     tracing::info!("database ready, migrations applied");
 
-    let app = routes::router(AppState { db });
+    let storage = ArtifactStore::Local {
+        root: config.storage_dir.clone(),
+    };
+    tracing::info!("artifact storage: {}", config.storage_dir.display());
+
+    let app = routes::router(AppState { db, storage }, config.max_upload_bytes);
 
     let listener = TcpListener::bind(config.bind_addr)
         .await

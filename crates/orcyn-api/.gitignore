@@ -1,2 +1,5 @@
 # Local config for orcyn-api (copy from .env.example). Never commit.
 .env
+
+# Local artifact storage (ELFs, stdin, proofs) in development.
+/data/

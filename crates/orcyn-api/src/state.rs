@@ -1,5 +1,7 @@
 use sqlx::PgPool;
 
+use crate::storage::ArtifactStore;
+
 /// Shared state handed to every request handler.
 ///
 /// `Clone` is cheap: `PgPool` is internally reference-counted, so cloning
@@ -7,4 +9,5 @@ use sqlx::PgPool;
 #[derive(Clone)]
 pub struct AppState {
     pub db: PgPool,
+    pub storage: ArtifactStore,
 }

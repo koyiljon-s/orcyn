@@ -17,7 +17,7 @@ chrono = { version = "0.4", features = ["serde"] }
 
 # Async runtime + web server
 tokio = { version = "1", features = ["full"] }
-axum = "0.8"
+axum = { version = "0.8", features = ["multipart"] }
 tower-http = { version = "0.7", features = ["trace"] }
 
 # Database

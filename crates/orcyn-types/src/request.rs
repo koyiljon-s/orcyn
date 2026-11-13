@@ -1,8 +1,10 @@
+use std::str::FromStr;
+
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use crate::JobStatus;
+use crate::{JobStatus, ParseEnumError};
 
 /// Unique ID of a proof request.
 ///
@@ -46,12 +48,49 @@ pub enum ProofMode {
     Plonk,
 }
 
+impl ProofMode {
+    pub const ALL: [&'static str; 4] = ["core", "compressed", "groth16", "plonk"];
+
+    /// The string stored in the database. Matches the JSON (serde) name.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ProofMode::Core => "core",
+            ProofMode::Compressed => "compressed",
+            ProofMode::Groth16 => "groth16",
+            ProofMode::Plonk => "plonk",
+        }
+    }
+}
+
+/// Enables `"groth16".parse::<ProofMode>()`.
+impl FromStr for ProofMode {
+    type Err = ParseEnumError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "core" => ProofMode::Core,
+            "compressed" => ProofMode::Compressed,
+            "groth16" => ProofMode::Groth16,
+            "plonk" => ProofMode::Plonk,
+            _ => {
+                return Err(ParseEnumError {
+                    kind: "proof mode",
+                    value: s.to_string(),
+                    expected: &ProofMode::ALL,
+                });
+            }
+        })
+    }
+}
+
 /// A proof request as stored by the API and returned to clients.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ProofRequest {
     pub id: RequestId,
     pub mode: ProofMode,
     pub status: JobStatus,
+    /// SHA-256 of the program ELF (hex). Identical programs share a hash.
+    pub program_hash: String,
     /// Worker currently holding the job, if any.
     pub worker_id: Option<String>,
     /// Human-readable reason when `status` is `Failed`.
@@ -65,12 +104,24 @@ mod tests {
     use super::*;
 
     #[test]
+    fn mode_as_str_matches_json_and_parses_back() {
+        for name in ProofMode::ALL {
+            let mode: ProofMode = name.parse().unwrap();
+            assert_eq!(mode.as_str(), name);
+            assert_eq!(serde_json::to_string(&mode).unwrap(), format!("\"{name}\""));
+        }
+        let err = "groth17".parse::<ProofMode>().unwrap_err();
+        assert!(err.to_string().contains("groth16"));
+    }
+
+    #[test]
     fn round_trips_through_json() {
         let now = Utc::now();
         let original = ProofRequest {
             id: RequestId::new(),
             mode: ProofMode::Groth16,
             status: JobStatus::Queued,
+            program_hash: "ab".repeat(32),
             worker_id: None,
             error: None,
             created_at: now,

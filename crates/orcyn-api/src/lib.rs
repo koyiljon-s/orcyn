@@ -13,3 +13,4 @@ pub mod repo;
 pub mod routes;
 pub mod services;
 pub mod state;
+pub mod storage;
