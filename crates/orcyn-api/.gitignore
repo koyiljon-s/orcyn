@@ -1,0 +1,2 @@
+# Local config for orcyn-api (copy from .env.example). Never commit.
+.env

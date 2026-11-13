@@ -1,0 +1,25 @@
+# Local development dependencies. Disposable: `docker compose down -v` wipes the data.
+# Production Postgres runs on GKE via CloudNativePG (see docs/BluePrint.md).
+#
+#   docker compose -f deploy/local/docker-compose.yml up -d
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: orcyn
+      POSTGRES_PASSWORD: orcyn
+      POSTGRES_DB: orcyn
+    ports:
+      # Host port 5433 avoids clashing with a Homebrew Postgres on 5432.
+      - "5433:5432"
+    volumes:
+      - orcyn_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orcyn -d orcyn"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  orcyn_pg_data:
