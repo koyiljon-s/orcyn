@@ -1,17 +1,10 @@
-use std::time::Duration;
-
 use anyhow::Context;
-use sqlx::postgres::PgPoolOptions;
 use tokio::net::TcpListener;
 use tracing_subscriber::EnvFilter;
 
-mod config;
-mod error;
-mod routes;
-mod state;
-
-use config::Config;
-use state::AppState;
+use orcyn_api::config::Config;
+use orcyn_api::state::AppState;
+use orcyn_api::{db, routes};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -30,19 +23,7 @@ async fn main() -> anyhow::Result<()> {
 
     let config = Config::from_env()?;
 
-    let db = PgPoolOptions::new()
-        .max_connections(10)
-        .acquire_timeout(Duration::from_secs(5))
-        .connect(&config.database_url)
-        .await
-        .context("failed to connect to Postgres")?;
-
-    // Applies any migrations in crates/orcyn-api/migrations/ that haven't run yet.
-    // sqlx records applied ones in the `_sqlx_migrations` table.
-    sqlx::migrate!("./migrations")
-        .run(&db)
-        .await
-        .context("failed to run database migrations")?;
+    let db = db::connect(&config.database_url).await?;
     tracing::info!("database ready, migrations applied");
 
     let app = routes::router(AppState { db });

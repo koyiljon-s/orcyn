@@ -34,6 +34,14 @@ sqlx = { version = "0.9", default-features = false, features = [
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
+# API keys: randomness + hashing
+rand = "0.10"
+sha2 = "0.11"
+hex = "0.4"
+
+# Command-line parsing (orcyn-admin, later orcyn-cli)
+clap = { version = "4", features = ["derive", "env"] }
+
 # Config + errors
 dotenvy = "0.15"
 thiserror = "2"

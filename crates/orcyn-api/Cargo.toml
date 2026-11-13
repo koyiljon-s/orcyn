@@ -4,6 +4,13 @@ description = "Central API and job coordinator for the Orcyn prover network"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+# This package has two binaries (orcyn-api, orcyn-admin).
+# `cargo run -p orcyn-api` runs this one unless you pass `--bin`.
+default-run = "orcyn-api"
+
+[[bin]]
+name = "orcyn-admin"
+path = "src/bin/admin.rs"
 
 [dependencies]
 orcyn-types = { workspace = true }
@@ -14,8 +21,14 @@ tower-http = { workspace = true }
 sqlx = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 dotenvy = { workspace = true }
 thiserror = { workspace = true }
 anyhow = { workspace = true }
+rand = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }
+clap = { workspace = true }

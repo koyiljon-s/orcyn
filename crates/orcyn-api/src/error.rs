@@ -9,6 +9,11 @@ use serde_json::json;
 /// type. `IntoResponse` below turns it into an HTTP status + JSON body.
 #[derive(Debug, thiserror::Error)]
 pub enum ApiError {
+    /// Missing, malformed, unknown or revoked API key. Returned as 401.
+    /// Deliberately vague: we don't tell attackers *why* a key was rejected.
+    #[error("invalid or missing API key")]
+    Unauthorized,
+
     /// A dependency (e.g. the database) is down. Returned as 503.
     #[error("service unavailable: {0}")]
     Unavailable(&'static str),
@@ -21,6 +26,7 @@ pub enum ApiError {
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (status, code) = match &self {
+            ApiError::Unauthorized => (StatusCode::UNAUTHORIZED, "unauthorized"),
             ApiError::Unavailable(_) => (StatusCode::SERVICE_UNAVAILABLE, "unavailable"),
             ApiError::Database(_) => (StatusCode::INTERNAL_SERVER_ERROR, "internal"),
         };
