@@ -1,5 +1,5 @@
-/targets
-/prover-api/target/
+# Rust build output
+/target
 .env
 .vscode
 
