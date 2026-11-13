@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use anyhow::Context;
 use tokio::net::TcpListener;
 use tracing_subscriber::EnvFilter;
@@ -5,7 +7,7 @@ use tracing_subscriber::EnvFilter;
 use orcyn_api::config::Config;
 use orcyn_api::state::AppState;
 use orcyn_api::storage::ArtifactStore;
-use orcyn_api::{db, routes};
+use orcyn_api::{db, routes, tasks};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -22,7 +24,7 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
-    let config = Config::from_env()?;
+    let config = Arc::new(Config::from_env()?);
 
     let db = db::connect(&config.database_url).await?;
     tracing::info!("database ready, migrations applied");
@@ -32,7 +34,19 @@ async fn main() -> anyhow::Result<()> {
     };
     tracing::info!("artifact storage: {}", config.storage_dir.display());
 
-    let app = routes::router(AppState { db, storage }, config.max_upload_bytes);
+    if config.worker_token.is_none() {
+        tracing::warn!("ORCYN_WORKER_TOKEN is not set: worker endpoints will reject every request");
+    }
+
+    let state = AppState {
+        db,
+        storage,
+        config: config.clone(),
+    };
+
+    tasks::lease_reaper::spawn(state.clone());
+
+    let app = routes::router(state);
 
     let listener = TcpListener::bind(config.bind_addr)
         .await

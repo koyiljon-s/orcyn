@@ -54,6 +54,7 @@ impl JobStatus {
             (Queued, Assigned)
                 | (Assigned, Proving)
                 | (Assigned, Queued) // worker lease expired before proving started
+                | (Assigned, Failed) // e.g. download failed, out of retries
                 | (Proving, Fulfilled)
                 | (Proving, Failed)
                 | (Proving, Queued) // worker lease expired during proving

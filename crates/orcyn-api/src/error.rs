@@ -23,6 +23,11 @@ pub enum ApiError {
     #[error("not found")]
     NotFound,
 
+    /// The request is valid but the resource is in the wrong state, e.g. a
+    /// worker reporting on a job it no longer holds, or a proof not ready yet.
+    #[error("{0}")]
+    Conflict(String),
+
     #[error("upload too large")]
     PayloadTooLarge,
 
@@ -56,6 +61,7 @@ impl IntoResponse for ApiError {
             ApiError::BadRequest(_) => (StatusCode::BAD_REQUEST, "bad_request"),
             ApiError::Unauthorized => (StatusCode::UNAUTHORIZED, "unauthorized"),
             ApiError::NotFound => (StatusCode::NOT_FOUND, "not_found"),
+            ApiError::Conflict(_) => (StatusCode::CONFLICT, "conflict"),
             ApiError::PayloadTooLarge => (StatusCode::PAYLOAD_TOO_LARGE, "payload_too_large"),
             ApiError::Unavailable(_) => (StatusCode::SERVICE_UNAVAILABLE, "unavailable"),
             ApiError::Database(_) | ApiError::Internal(_) => {

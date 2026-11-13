@@ -13,8 +13,18 @@ pub struct Config {
     pub bind_addr: SocketAddr,
     /// Where the local artifact store keeps files.
     pub storage_dir: PathBuf,
-    /// Max size of an upload request (ELF + stdin), in bytes.
+    /// Max size of an upload (ELF + stdin, or a proof), in bytes.
     pub max_upload_bytes: usize,
+
+    /// Shared secret workers send as `Authorization: Bearer <token>`.
+    /// `None` disables the worker endpoints entirely.
+    pub worker_token: Option<String>,
+    /// How long a worker may go without a heartbeat before losing its job.
+    pub lease_secs: u64,
+    /// How many times a job is tried before it's marked failed for good.
+    pub max_attempts: i32,
+    /// How often the lease reaper looks for expired leases.
+    pub reaper_interval_secs: u64,
 }
 
 impl Config {
@@ -34,11 +44,19 @@ impl Config {
 
         let max_upload_mb: usize = parse_or("ORCYN_MAX_UPLOAD_MB", 64)?;
 
+        let worker_token = env::var("ORCYN_WORKER_TOKEN")
+            .ok()
+            .filter(|token| !token.is_empty());
+
         Ok(Config {
             database_url,
             bind_addr,
             storage_dir,
             max_upload_bytes: max_upload_mb * 1024 * 1024,
+            worker_token,
+            lease_secs: parse_or("ORCYN_LEASE_SECS", 60)?,
+            max_attempts: parse_or("ORCYN_MAX_ATTEMPTS", 3)?,
+            reaper_interval_secs: parse_or("ORCYN_REAPER_INTERVAL_SECS", 10)?,
         })
     }
 }

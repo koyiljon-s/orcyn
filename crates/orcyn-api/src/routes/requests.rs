@@ -1,6 +1,7 @@
 use axum::Json;
 use axum::extract::{Multipart, Path, Query, State};
-use axum::http::StatusCode;
+use axum::http::{StatusCode, header};
+use axum::response::IntoResponse;
 use orcyn_types::{ProofMode, ProofRequest};
 use serde::Deserialize;
 use uuid::Uuid;
@@ -68,6 +69,23 @@ pub async fn get(
 ) -> Result<Json<ProofRequest>, ApiError> {
     let request = services::requests::get(&state, account.account_id, id).await?;
     Ok(Json(request))
+}
+
+/// GET /v1/requests/{id}/proof: download the finished proof (binary).
+pub async fn proof(
+    State(state): State<AppState>,
+    account: AuthedAccount,
+    Path(id): Path<Uuid>,
+) -> Result<impl IntoResponse, ApiError> {
+    let bytes = services::requests::proof(&state, account.account_id, id).await?;
+    let headers = [
+        (header::CONTENT_TYPE, "application/octet-stream".to_string()),
+        (
+            header::CONTENT_DISPOSITION,
+            format!("attachment; filename=\"{id}.proof\""),
+        ),
+    ];
+    Ok((headers, bytes))
 }
 
 #[derive(Deserialize)]

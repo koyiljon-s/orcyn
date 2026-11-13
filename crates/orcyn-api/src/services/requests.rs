@@ -1,6 +1,6 @@
 //! Proof request rules: validation, storage layout, ownership.
 
-use orcyn_types::{ProofMode, ProofRequest, RequestId};
+use orcyn_types::{JobStatus, ProofMode, ProofRequest, RequestId};
 use sha2::{Digest, Sha256};
 use uuid::Uuid;
 
@@ -62,6 +62,21 @@ pub async fn get(state: &AppState, account_id: Uuid, id: Uuid) -> Result<ProofRe
         .await?
         .ok_or(ApiError::NotFound)?;
     Ok(row.try_into()?)
+}
+
+/// The finished proof bytes. 409 if the request isn't fulfilled yet.
+pub async fn proof(state: &AppState, account_id: Uuid, id: Uuid) -> Result<Vec<u8>, ApiError> {
+    let (status, proof_key) = proof_requests::proof_key_for_account(&state.db, id, account_id)
+        .await?
+        .ok_or(ApiError::NotFound)?;
+
+    if status != JobStatus::Fulfilled.as_str() {
+        return Err(ApiError::Conflict(format!("proof not ready (status: {status})")));
+    }
+    let proof_key = proof_key
+        .ok_or_else(|| anyhow::anyhow!("fulfilled request {id} has no proof_key"))?;
+
+    Ok(state.storage.get(&proof_key).await?)
 }
 
 pub async fn list(

@@ -1,8 +1,8 @@
 use axum::extract::FromRequestParts;
-use axum::http::header::AUTHORIZATION;
 use axum::http::request::Parts;
 use uuid::Uuid;
 
+use super::bearer_token;
 use crate::error::ApiError;
 use crate::repo;
 use crate::services::keys;
@@ -30,11 +30,7 @@ impl FromRequestParts<AppState> for AuthedAccount {
 
     async fn from_request_parts(parts: &mut Parts, state: &AppState) -> Result<Self, ApiError> {
         // Expect: Authorization: Bearer orcyn_sk_...
-        let key = parts
-            .headers
-            .get(AUTHORIZATION)
-            .and_then(|value| value.to_str().ok())
-            .and_then(|value| value.strip_prefix("Bearer "))
+        let key = bearer_token(parts)
             .filter(|key| keys::looks_valid(key))
             .ok_or(ApiError::Unauthorized)?;
 

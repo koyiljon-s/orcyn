@@ -92,6 +92,19 @@ pub async fn find_for_account(
     .await
 }
 
+/// Status and proof storage key of a request owned by `account_id`.
+pub async fn proof_key_for_account(
+    db: &PgPool,
+    id: Uuid,
+    account_id: Uuid,
+) -> sqlx::Result<Option<(String, Option<String>)>> {
+    sqlx::query_as("SELECT status, proof_key FROM proof_requests WHERE id = $1 AND account_id = $2")
+        .bind(id)
+        .bind(account_id)
+        .fetch_optional(db)
+        .await
+}
+
 /// Newest first.
 pub async fn list_for_account(
     db: &PgPool,

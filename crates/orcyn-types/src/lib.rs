@@ -6,9 +6,11 @@
 mod job;
 mod parse;
 mod request;
+mod worker;
 
 // Re-export so users write `orcyn_types::JobStatus`
 // instead of `orcyn_types::job::JobStatus`.
 pub use job::JobStatus;
 pub use parse::ParseEnumError;
 pub use request::{ProofMode, ProofRequest, RequestId};
+pub use worker::{ClaimedJob, FailJobRequest, FailJobResponse, HeartbeatResponse, WORKER_ID_HEADER};
