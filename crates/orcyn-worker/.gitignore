@@ -1,0 +1,2 @@
+# Local config for orcyn-worker (copy from .env.example). Never commit.
+.env

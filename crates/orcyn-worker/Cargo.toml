@@ -1,0 +1,29 @@
+[package]
+name = "orcyn-worker"
+description = "Claims proof jobs from orcyn-api and proves them with SP1"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[features]
+# GPU proving. Only builds/runs on Linux x86_64 with an NVIDIA GPU:
+#   cargo build -p orcyn-worker --release --features cuda
+cuda = ["sp1-sdk/cuda"]
+
+[dependencies]
+orcyn-types = { workspace = true }
+
+sp1-sdk = { workspace = true }
+bincode = { workspace = true }
+
+tokio = { workspace = true }
+tokio-util = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+uuid = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+dotenvy = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }

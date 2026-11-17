@@ -1,6 +1,8 @@
 [workspace]
 resolver = "3"
 members = ["crates/*"]
+# SP1 programs compile to RISC-V and have their own workspaces.
+exclude = ["programs"]
 
 # Settings every crate can inherit with `edition.workspace = true`, etc.
 [workspace.package]
@@ -39,7 +41,17 @@ rand = "0.10"
 sha2 = "0.11"
 hex = "0.4"
 
-# Command-line parsing (orcyn-admin, later orcyn-cli)
+# HTTP client (orcyn-worker, later orcyn-sdk)
+reqwest = { version = "0.13", features = ["json"] }
+tokio-util = "0.7"
+
+# SP1 zkVM. native-gnark: Groth16/Plonk run in-process (needs Go at build time)
+# instead of in a Docker container.
+sp1-sdk = { version = "6.10.0", features = ["native-gnark"] }
+# Same format SP1 uses for SP1Stdin / proof files.
+bincode = "1"
+
+# Command-line parsing (orcyn-admin, orcyn-worker, later orcyn-cli)
 clap = { version = "4", features = ["derive", "env"] }
 
 # Config + errors
