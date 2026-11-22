@@ -44,7 +44,7 @@ pub enum ProofMode {
     Compressed,
     /// Tiny SNARK proof, cheap to verify on-chain (~270k gas).
     Groth16,
-    /// SNARK proof with no trusted setup; slightly more expensive on-chain.
+    /// SNARK proof using a universal (not per-circuit) trusted setup; slightly more expensive on-chain.
     Plonk,
 }
 

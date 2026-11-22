@@ -1,56 +1,40 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-
-
-const navLinks = [
-  { label: "Whitepaper", href: "/whitepaper" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Docs", href: "https://docs.orcyn.xyz" },
-];
+import Container from "@/components/layouts/Container";
+import { sectionLinks } from "@/lib/site";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
   return (
-    <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#02090a]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-[1fr_auto] md:grid-cols-[auto_auto_1fr] items-center gap-8 py-3.75">
-            <Link
-              href="/"
-              aria-label="Orcyn home"
-              className="inline-flex items-center justify-self-start"
-            >
-              <span className="text-white italic flex text-3xl md:text-[2.02rem] font-bold tracking-[-0.04em] leading-none">
-                orcyn
-              </span>
-            </Link>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-md">
+      <Container>
+        <div className="flex h-16 items-center justify-between gap-8">
+          <Link
+            href="/"
+            aria-label="Orcyn home"
+            className="rounded-md text-3xl font-bold italic leading-none tracking-[-0.04em] text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
+          >
+            orcyn
+          </Link>
 
-            <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-6 justify-self-start">
-              {navLinks.map(({ label, href }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-white font-medium text-lg px-1.5 py-1 rounded hover:text-[#9898a3] transition-colors"
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-3 justify-self-end">
-              <Link
-                href="/get-started"
-                className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#36f5a2] hover:bg-white hover:text-[#171717] hover:border-white text-white font-medium text-lg rounded-full px-4 py-2 transition-colors"
+          <nav aria-label="Primary" className="hidden flex-1 items-center gap-1 md:flex">
+            {sectionLinks.map(({ label, href }) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-md px-3 py-2 text-base font-medium text-fg/80 transition-colors duration-200 hover:text-fg focus-visible:outline-2 focus-visible:outline-fg"
               >
-                Get started
-              </Link>
-            </div>
-          </div>
+                {label}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="#waitlist"
+            className="inline-flex min-h-11 items-center rounded-full bg-invert px-5 text-base font-semibold text-on-invert transition-colors duration-200 hover:bg-invert/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+          >
+            Get early access
+          </a>
         </div>
-      </header>
-    </>
+      </Container>
+    </header>
   );
 }
