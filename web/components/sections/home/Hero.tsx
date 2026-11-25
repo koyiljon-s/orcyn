@@ -1,34 +1,36 @@
 import Container from "@/components/layouts/Container";
+import NetworkDiagram from "@/components/sections/home/NetworkDiagram";
+import { SectionLabel } from "@/components/sections/home/SectionHeading";
 import Terminal from "@/components/sections/home/Terminal";
 import WaitlistForm from "@/components/sections/home/WaitlistForm";
+import { buttonSecondary } from "@/lib/styles";
 
 export default function Hero() {
   return (
-    <section className="bg-page pt-32 pb-16 md:pt-40 md:pb-24">
-      <Container>
-        <p className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-sm font-medium text-subtle">
-          <span className="size-1.5 rounded-full bg-brand" aria-hidden="true" />
-          Early access · SP1 proving API
-        </p>
-
-        <h1 className="mt-8 text-[clamp(2.75rem,9vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-fg">
-          Zero-knowledge proofs,
-          <br />
-          on demand.
-        </h1>
-
-        <div className="mt-10 grid items-end gap-8 lg:grid-cols-[1fr_auto] lg:gap-16">
-          <p className="max-w-2xl text-lg leading-relaxed text-subtle md:text-2xl md:leading-relaxed">
+    <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+      <Container className="grid grid-cols-12 items-center gap-y-14 lg:gap-x-12">
+        <div className="col-span-12 min-w-0 lg:col-span-7">
+          <SectionLabel>Early access · SP1 proving API</SectionLabel>
+          <h1 className="mt-7 text-[clamp(2.5rem,5.6vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.03em] text-fg">
+            Zero-knowledge proofs, on demand.
+          </h1>
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-fg md:text-xl">
             Send an SP1 program and its input. Get back a verified proof — core, compressed,
             Groth16 or Plonk — without running a GPU cluster.
           </p>
-          <div className="w-full lg:w-[440px]">
+          <div className="mt-9 max-w-xl">
             <WaitlistForm source="hero" />
           </div>
+          <a href="#how-it-works" className={`mt-4 ${buttonSecondary}`}>
+            See how it works <span aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div className="col-span-12 min-w-0 lg:col-span-5">
+          <NetworkDiagram />
         </div>
       </Container>
 
-      <Container className="mt-16 md:mt-20">
+      <Container className="mt-20 md:mt-28">
         <Terminal />
       </Container>
     </section>

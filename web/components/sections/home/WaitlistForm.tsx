@@ -2,6 +2,7 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { site } from "@/lib/site";
+import { buttonPrimary } from "@/lib/styles";
 
 type Status =
   | { kind: "idle" }
@@ -54,8 +55,8 @@ export default function WaitlistForm({ source }: { source: string }) {
 
   if (status.kind === "success") {
     return (
-      <p role="status" className="rounded-2xl border border-line bg-panel px-5 py-4 text-base text-fg">
-        <span className="text-brand">✓</span> You&apos;re on the list. We&apos;ll be in touch when
+      <p role="status" className="border border-line border-l-[5px] border-l-pink bg-page px-5 py-4 text-base text-fg">
+        <span>✓</span> You&apos;re on the list. We&apos;ll be in touch when
         early access opens.
       </p>
     );
@@ -77,7 +78,7 @@ export default function WaitlistForm({ source }: { source: string }) {
           autoComplete="email"
           placeholder="you@company.com"
           aria-describedby={status.kind === "error" ? messageId : undefined}
-          className="min-h-12 flex-1 rounded-full border border-fg/20 bg-fg/5 px-5 text-base text-fg placeholder:text-subtle focus:border-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-fg/30"
+          className="min-h-12 min-w-0 flex-1 border border-muted-fg bg-page px-4 text-base text-fg placeholder:text-muted-fg"
         />
         {/* Honeypot (hidden from people and screen readers) */}
         <input
@@ -91,13 +92,14 @@ export default function WaitlistForm({ source }: { source: string }) {
         <button
           type="submit"
           disabled={submitting}
-          className="min-h-12 cursor-pointer rounded-full bg-invert px-6 text-base font-semibold text-on-invert transition-colors duration-200 hover:bg-invert/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg disabled:cursor-wait disabled:opacity-70"
+          className={`${buttonPrimary} min-h-12 cursor-pointer disabled:cursor-wait disabled:opacity-70`}
         >
           {submitting ? "Joining…" : "Get early access"}
+          {!submitting && <span aria-hidden="true">↗</span>}
         </button>
       </div>
       {status.kind === "error" && (
-        <p id={messageId} role="alert" className="mt-3 text-sm text-red-300">
+        <p id={messageId} role="alert" className="mt-3 text-sm text-danger">
           {status.message}
         </p>
       )}

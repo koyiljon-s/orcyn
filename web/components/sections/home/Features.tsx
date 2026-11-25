@@ -1,7 +1,7 @@
 import { Boxes, KeyRound, RefreshCw, ShieldCheck } from "lucide-react";
 import Container from "@/components/layouts/Container";
 import SectionHeading from "@/components/sections/home/SectionHeading";
-import { Panel } from "@/components/sections/home/Panel";
+import { Card } from "@/components/sections/home/Panel";
 
 /** Visual: a job moving through its states, as the API reports it. */
 function JobTimeline() {
@@ -12,17 +12,17 @@ function JobTimeline() {
     { name: "fulfilled", detail: "proof verified · ready to download", done: true, final: true },
   ];
   return (
-    <ol className="space-y-3">
+    <ol className="border-y border-line">
       {states.map(({ name, detail, final }) => (
-        <li key={name} className="flex items-center gap-4 rounded-2xl border border-line bg-panel-inner px-5 py-4">
+        <li key={name} className="flex items-center gap-4 border-b border-line py-4 last:border-b-0">
           <span
-            className={`flex size-6 shrink-0 items-center justify-center rounded-full text-xs ${final ? "bg-brand text-ink" : "border border-fg/25 text-fg/70"}`}
+            className={`flex size-6 shrink-0 items-center justify-center border text-xs text-fg ${final ? "border-fg bg-lime" : "border-line"}`}
             aria-hidden="true"
           >
             ✓
           </span>
-          <span className="w-24 shrink-0 font-mono text-sm text-fg">{name}</span>
-          <span className="truncate font-mono text-xs text-subtle sm:text-sm">{detail}</span>
+          <span className="w-20 shrink-0 font-mono text-sm text-fg">{name}</span>
+          <span className="font-mono text-xs text-muted-fg sm:text-sm">{detail}</span>
         </li>
       ))}
     </ol>
@@ -38,14 +38,14 @@ function ProofModes() {
     { name: "plonk", detail: "SNARK · on-chain, universal setup", selected: false },
   ];
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-2">
       {modes.map(({ name, detail, selected }) => (
         <li
           key={name}
-          className={`flex items-center justify-between gap-4 rounded-2xl border px-5 py-4 ${selected ? "border-invert bg-invert text-on-invert" : "border-line bg-panel-inner text-fg"}`}
+          className={`flex items-center justify-between gap-4 border px-5 py-4 ${selected ? "border-fg bg-fg text-white" : "border-line text-fg"}`}
         >
           <span className="font-mono text-sm font-medium">--mode {name}</span>
-          <span className={`hidden text-sm sm:block ${selected ? "text-on-invert/70" : "text-subtle"}`}>{detail}</span>
+          <span className={`hidden text-sm sm:block ${selected ? "text-subtle" : "text-muted-fg"}`}>{detail}</span>
         </li>
       ))}
     </ul>
@@ -77,39 +77,39 @@ const smallFeatures = [
 
 export default function Features() {
   return (
-    <section id="features" className="tone-light bg-page scroll-mt-20 py-24 md:py-36">
+    <section id="features" aria-labelledby="features-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
       <Container>
         <SectionHeading eyebrow="Features" titleId="features-title" title="Proving infrastructure you don't have to run." />
 
-        <div aria-labelledby="features-title" className="mt-16 grid gap-6 lg:grid-cols-2">
-          <Panel className="flex flex-col p-6 sm:p-10">
-            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-fg md:text-3xl">Live job status</h3>
-            <p className="mt-3 text-lg leading-relaxed text-subtle">
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          <Card accent="pink" className="p-6 sm:p-10">
+            <h3 className="text-2xl font-medium tracking-[-0.03em] text-fg md:text-3xl">Live job status</h3>
+            <p className="mt-3 text-base leading-relaxed text-muted-fg md:text-lg">
               Follow every request from queued to fulfilled, including which prover has it.
             </p>
             <div className="mt-8">
               <JobTimeline />
             </div>
-          </Panel>
+          </Card>
 
-          <Panel className="flex flex-col p-6 sm:p-10">
-            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-fg md:text-3xl">Every SP1 proof type</h3>
-            <p className="mt-3 text-lg leading-relaxed text-subtle">
+          <Card accent="blue" className="p-6 sm:p-10">
+            <h3 className="text-2xl font-medium tracking-[-0.03em] text-fg md:text-3xl">Every SP1 proof type</h3>
+            <p className="mt-3 text-base leading-relaxed text-muted-fg md:text-lg">
               STARKs for speed and recursion, SNARKs for cheap verification on Ethereum.
             </p>
             <div className="mt-8">
               <ProofModes />
             </div>
-          </Panel>
+          </Card>
         </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {smallFeatures.map(({ icon: Icon, title, body }) => (
-            <Panel key={title} className="p-7">
-              <Icon className="size-6 text-fg" aria-hidden="true" />
-              <h3 className="mt-5 text-lg font-semibold text-fg">{title}</h3>
-              <p className="mt-2 text-base leading-relaxed text-subtle">{body}</p>
-            </Panel>
+            <Card key={title} className="p-7">
+              <Icon className="size-6 text-fg" strokeWidth={1.5} aria-hidden="true" />
+              <h3 className="mt-6 text-lg font-medium tracking-[-0.03em] text-fg">{title}</h3>
+              <p className="mt-2 text-base leading-relaxed text-muted-fg">{body}</p>
+            </Card>
           ))}
         </div>
       </Container>

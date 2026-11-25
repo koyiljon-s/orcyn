@@ -21,25 +21,40 @@ const lines: Line[] = [
 
 function LineText({ line }: { line: Line }) {
   if (line.tone === "ok") {
-    // Green only on the checkmark; the rest stays white.
+    // Accent only on the checkmark; the rest stays white.
     return (
       <>
-        <span className="text-brand">✓</span>
-        <span className="text-white/85">{line.text.slice(1)}</span>
+        <span className="text-lime">✓</span>
+        <span className="text-white">{line.text.slice(1)}</span>
       </>
     );
   }
-  return <span className={line.tone === "command" ? "text-white" : "text-code-dim"}>{line.text}</span>;
+  if (line.tone === "command") {
+    // "$ orcyn prove --flag value": pink prompt, blue flags.
+    return (
+      <>
+        {line.text.split(/(^\$|\s-{1,2}[a-z]+)/).map((part, i) => {
+          const tone = part === "$" ? "text-pink" : /^\s-/.test(part) ? "text-sky" : "text-white";
+          return (
+            <span key={i} className={tone}>
+              {part}
+            </span>
+          );
+        })}
+      </>
+    );
+  }
+  return <span className="text-subtle">{line.text}</span>;
 }
 
 export default function Terminal() {
   return (
-    <figure className="w-full overflow-hidden rounded-[28px] border border-code-line bg-code">
-      <div className="flex items-center gap-2 border-b border-code-line px-5 py-4" aria-hidden="true">
-        <span className="size-3 rounded-full bg-white/15" />
-        <span className="size-3 rounded-full bg-white/15" />
-        <span className="size-3 rounded-full bg-white/15" />
-        <span className="ml-3 font-mono text-xs text-code-dim">orcyn — zsh</span>
+    <figure className="w-full overflow-hidden bg-fg">
+      <div className="flex items-center gap-2 border-b border-white/15 px-5 py-4" aria-hidden="true">
+        <span className="size-2.5 bg-white/25" />
+        <span className="size-2.5 bg-white/25" />
+        <span className="size-2.5 bg-white/25" />
+        <span className="ml-3 font-mono text-xs text-subtle">orcyn — zsh</span>
       </div>
 
       <pre className="overflow-x-auto px-5 py-6 font-mono text-[13px] leading-8 sm:px-8 sm:py-8 sm:text-base">
@@ -56,7 +71,7 @@ export default function Terminal() {
         </code>
       </pre>
 
-      <figcaption className="border-t border-code-line px-5 py-3 font-mono text-xs text-code-dim sm:px-8">
+      <figcaption className="border-t border-white/15 px-5 py-3 font-mono text-xs text-subtle sm:px-8">
         CLI preview · fibonacci example from our test runs
       </figcaption>
     </figure>

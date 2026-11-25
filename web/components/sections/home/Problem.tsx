@@ -10,7 +10,7 @@ const stats = [
 
 export default function Problem() {
   return (
-    <section aria-labelledby="problem-title" className="tone-light bg-page py-24 md:py-36">
+    <section aria-labelledby="problem-title" className="border-t border-line py-24 md:py-32">
       <Container>
         <SectionHeading eyebrow="The problem" titleId="problem-title" title="Writing ZK programs got easy. Proving them didn't.">
           zkVMs like SP1 let you write provable programs in plain Rust. Generating the proofs still
@@ -18,20 +18,17 @@ export default function Problem() {
           team rebuilds on its own.
         </SectionHeading>
 
-        <dl className="mt-16 grid gap-px overflow-hidden rounded-[28px] border border-line bg-line md:grid-cols-3">
+        <dl className="mt-14 grid gap-px border border-line bg-line md:grid-cols-3">
           {stats.map(({ value, label }) => (
-            <div key={value} className="bg-panel p-8 md:p-10">
-              <dt className="sr-only">{label}</dt>
-              <dd>
-                <span className="block text-[clamp(3.5rem,7vw,6rem)] font-semibold leading-none tracking-[-0.05em] text-fg">
-                  {value}
-                </span>
-                <span className="mt-5 block max-w-xs text-base leading-relaxed text-subtle">{label}</span>
+            <div key={value} className="flex flex-col bg-page p-8 md:p-10">
+              <dt className="order-2 mt-5 max-w-xs text-base leading-relaxed text-muted-fg">{label}</dt>
+              <dd className="order-1 text-[clamp(3rem,5.4vw,4.5rem)] font-medium leading-none tracking-[-0.03em] text-fg">
+                {value}
               </dd>
             </div>
           ))}
         </dl>
-        <p className="mt-4 text-sm text-subtle">GPU figures: SP1 hardware requirements, Succinct documentation.</p>
+        <p className="mt-4 text-sm text-muted-fg">GPU figures: SP1 hardware requirements, Succinct documentation.</p>
       </Container>
     </section>
   );

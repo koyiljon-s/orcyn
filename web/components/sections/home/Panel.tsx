@@ -1,26 +1,41 @@
 import type { ReactNode } from "react";
 
-/** Large rounded panel for product visuals. Follows the section's tone (dark or light). */
-export function Panel({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`overflow-hidden rounded-[28px] border border-line bg-panel ${className}`}>{children}</div>;
+const accents = { pink: "bg-pink", blue: "bg-sky", navy: "bg-fg" } as const;
+export type Accent = keyof typeof accents;
+
+/** White, square, thin-bordered card. Optional 5px accent bar on top. */
+export function Card({
+  children,
+  accent,
+  className = "",
+}: {
+  children: ReactNode;
+  accent?: Accent;
+  className?: string;
+}) {
+  return (
+    <div className="relative h-full min-w-0 border border-line bg-page">
+      {accent && <span aria-hidden="true" className={`absolute -inset-x-px -top-px h-[5px] ${accents[accent]}`} />}
+      <div className={`h-full ${className}`}>{children}</div>
+    </div>
+  );
 }
 
-/**
- * Code block with a small filename/language label.
- * Always dark, even inside light sections: code reads best on dark, and a dark
- * product visual on a light section is a strong contrast.
- */
+/** Navy code panel with a small filename/language label. */
 export function CodeBlock({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-code-line bg-code">
-      <div className="border-b border-code-line px-5 py-3 font-mono text-xs text-code-dim">{label}</div>
-      <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-7 text-white/90 sm:text-sm">
+    <div className="min-w-0 bg-fg">
+      <div className="border-b border-white/15 px-5 py-3 font-mono text-xs text-subtle">{label}</div>
+      <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-7 text-white sm:text-sm">
         <code>{children}</code>
       </pre>
     </div>
   );
 }
 
-/** Dim comment / check helpers for hand-highlighted code (inside CodeBlock). */
-export const Dim = ({ children }: { children: ReactNode }) => <span className="text-code-dim">{children}</span>;
-export const Ok = ({ children }: { children: ReactNode }) => <span className="text-brand">{children}</span>;
+/** Hand-written syntax colors for code on navy. */
+type Props = { children: ReactNode };
+export const Dim = ({ children }: Props) => <span className="text-subtle">{children}</span>;
+export const Kw = ({ children }: Props) => <span className="text-pink">{children}</span>;
+export const Fn = ({ children }: Props) => <span className="text-sky">{children}</span>;
+export const Ok = ({ children }: Props) => <span className="text-lime">{children}</span>;

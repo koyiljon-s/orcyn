@@ -1,6 +1,6 @@
 import Container from "@/components/layouts/Container";
 import SectionHeading from "@/components/sections/home/SectionHeading";
-import { Panel } from "@/components/sections/home/Panel";
+import { Card, type Accent } from "@/components/sections/home/Panel";
 
 const useCases = [
   { title: "Rollups & L2s", body: "Prove state transitions and settle on Ethereum with a single Groth16 or Plonk proof." },
@@ -9,23 +9,25 @@ const useCases = [
   { title: "Verifiable compute & zkML", body: "Prove that a specific program or model produced a result, without re-running it." },
 ];
 
+const accents: Accent[] = ["pink", "blue", "navy", "pink"];
+
 export default function UseCases() {
   return (
-    <section id="use-cases" className="bg-page scroll-mt-20 py-24 md:py-36">
+    <section id="use-cases" aria-labelledby="use-cases-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
       <Container>
         <SectionHeading eyebrow="Use cases" titleId="use-cases-title" title="If it compiles to SP1, Orcyn proves it.">
           For teams shipping provable software on Ethereum and beyond.
         </SectionHeading>
 
-        <div aria-labelledby="use-cases-title" className="mt-16 grid gap-6 sm:grid-cols-2">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {useCases.map(({ title, body }, i) => (
-            <Panel key={title} className="flex min-h-64 flex-col justify-between p-8 md:p-10">
-              <span className="font-mono text-sm text-subtle">0{i + 1}</span>
-              <div className="mt-10">
-                <h3 className="text-3xl font-semibold leading-tight tracking-[-0.03em] text-fg md:text-4xl">{title}</h3>
-                <p className="mt-4 max-w-md text-lg leading-relaxed text-subtle">{body}</p>
+            <Card key={title} accent={accents[i]} className="flex flex-col justify-between gap-12 p-8 md:p-10">
+              <span className="font-mono text-[13px] text-muted-fg">0{i + 1}</span>
+              <div>
+                <h3 className="text-2xl font-medium leading-tight tracking-[-0.03em] text-fg md:text-3xl">{title}</h3>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-fg md:text-lg">{body}</p>
               </div>
-            </Panel>
+            </Card>
           ))}
         </div>
       </Container>
