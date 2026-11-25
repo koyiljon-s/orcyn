@@ -5,11 +5,10 @@ import { Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 
-// Headings and body. The italic is used by the wordmark.
+// Headings and body.
 const satoshi = localFont({
   src: [
     { path: "../public/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2", weight: "300 900", style: "normal" },
-    { path: "../public/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-VariableItalic.woff2", weight: "300 900", style: "italic" },
   ],
   variable: "--font-satoshi",
   display: "swap",

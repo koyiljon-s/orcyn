@@ -1,4 +1,5 @@
 import Container from "@/components/layouts/Container";
+import Logo from "@/components/layouts/Logo";
 import { sectionLinks, site } from "@/lib/site";
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
     <footer className="border-t border-line bg-page">
       <Container className="flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-2">
-          <span className="text-2xl font-bold italic leading-none tracking-[-0.04em]">orcyn</span>
+          <Logo />
           <p className="text-sm text-muted-fg">{site.tagline}</p>
         </div>
 
