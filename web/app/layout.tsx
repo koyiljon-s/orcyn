@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+// Headings and body. The italic is used by the wordmark.
+const satoshi = localFont({
+  src: [
+    { path: "../public/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2", weight: "300 900", style: "normal" },
+    { path: "../public/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-VariableItalic.woff2", weight: "300 900", style: "italic" },
+  ],
+  variable: "--font-satoshi",
+  display: "swap",
+});
+
+// Labels, tags and code.
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
@@ -29,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn("h-full antialiased font-sans", geistSans.variable, geistMono.variable)}
+      className={cn("h-full antialiased font-sans", satoshi.variable, geistMono.variable)}
     >
       <body className="min-h-full flex flex-col bg-page text-fg">{children}</body>
     </html>
