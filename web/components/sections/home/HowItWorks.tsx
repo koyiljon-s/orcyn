@@ -87,13 +87,13 @@ const steps: { step: string; title: string; body: string; visual: ReactNode }[] 
 export default function HowItWorks() {
   return (
     <section id="how-it-works" aria-labelledby="how-title" className="relative overflow-hidden bg-page py-24 text-fg md:py-36">
-      <Blueprint className="pointer-events-none absolute -right-40 top-10 w-[900px] max-w-none opacity-25" />
-      <Blueprint className="pointer-events-none absolute -left-72 bottom-0 w-[800px] max-w-none opacity-15" />
+      <Blueprint className="pointer-events-none absolute -right-40 top-10 w-[560px] max-w-none opacity-15 sm:w-[900px] sm:opacity-25" />
+      <Blueprint className="pointer-events-none absolute -left-72 bottom-0 hidden w-[800px] sm:block max-w-none opacity-15" />
       <Container className="relative">
         <SectionHeading titleId="how-title" eyebrow="How it works" title="From Rust to a proof on Ethereum." />
         <ol className="mt-16 space-y-6">
           {steps.map(({ step, title, body, visual }) => (
-            <li key={step} className="grid border border-fg bg-page/85 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+            <li key={step} className="grid border border-fg bg-page/95 sm:bg-page/85 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
               <div className="p-7 sm:p-10">
                 <span className="inline-flex border border-fg bg-pink px-2.5 py-0.5 text-[13px] text-[#00050a]">{step}</span>
                 <h3 className="mt-6 text-3xl font-normal tracking-[-0.045em] text-fg">{title}</h3>

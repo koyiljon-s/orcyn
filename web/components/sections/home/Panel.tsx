@@ -9,7 +9,7 @@ export function Tag({ children }: { children: ReactNode }) {
 export function Spec({ label, value, hot = false }: { label: string; value: string; hot?: boolean }) {
   return (
     <div className="flex border border-fg text-[15px]">
-      <span className={`flex w-28 shrink-0 items-center border-r border-fg px-3 py-2 uppercase sm:w-36 ${hot ? "bg-pink text-[#00050a]" : ""}`}>{label}</span>
+      <span className={`flex w-32 shrink-0 items-center border-r border-fg px-3 py-2 uppercase sm:w-36 ${hot ? "bg-pink text-[#00050a]" : ""}`}>{label}</span>
       <span className="min-w-0 px-3 py-2 text-muted-fg">{value}</span>
     </div>
   );

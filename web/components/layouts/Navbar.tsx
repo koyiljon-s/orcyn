@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/layouts/Logo";
+import MobileMenu from "@/components/layouts/MobileMenu";
 import { sectionLinks } from "@/lib/site";
 
 /** Pink bar, then a header over the hero: links left, logo centered, call to action right. */
@@ -19,9 +20,10 @@ export default function Navbar() {
           <Link href="/" aria-label="Orcyn home" className="order-1 lg:order-2 lg:justify-self-center">
             <Logo />
           </Link>
-          <a href="#waitlist" className="order-3 inline-flex min-h-11 items-center justify-self-end whitespace-nowrap text-[13px] uppercase text-[#ff6fdc] hover:text-white">
+          <a href="#waitlist" className="order-3 inline-flex min-h-11 items-center justify-self-end max-md:ml-auto whitespace-nowrap text-[13px] uppercase text-[#ff6fdc] hover:text-white">
             Get early access
           </a>
+          <MobileMenu />
         </div>
       </header>
     </div>

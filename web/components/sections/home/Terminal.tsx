@@ -57,7 +57,7 @@ export default function Terminal() {
         <span className="ml-3 font-mono text-xs text-subtle">orcyn — zsh</span>
       </div>
 
-      <pre className="overflow-x-auto px-5 py-6 font-mono text-[13px] leading-8 sm:px-8 sm:py-8 sm:text-base">
+      <pre className="overflow-x-auto whitespace-pre-wrap px-5 py-6 font-mono text-[13px] leading-7 sm:whitespace-pre sm:leading-8 sm:px-8 sm:py-8 sm:text-base">
         <code>
           {lines.map((line, i) => (
             <span

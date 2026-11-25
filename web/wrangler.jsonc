@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4/config-schema.json",
+  "name": "orcyn-web",
+  "compatibility_date": "2026-11-01",
+  // Static files only, no server code.
+  "assets": { "directory": "./out", "not_found_handling": "404-page" },
+  // Routes sit on top of the zone's existing proxied DNS records (email records untouched).
+  "routes": [
+    { "pattern": "orcyn.xyz/*", "zone_name": "orcyn.xyz" },
+    { "pattern": "www.orcyn.xyz/*", "zone_name": "orcyn.xyz" }
+  ],
+  "workers_dev": false
+}
