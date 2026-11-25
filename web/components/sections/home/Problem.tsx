@@ -1,5 +1,7 @@
 import Container from "@/components/layouts/Container";
+import { Spec } from "@/components/sections/home/Panel";
 import SectionHeading from "@/components/sections/home/SectionHeading";
+import Terminal from "@/components/sections/home/Terminal";
 
 // Figures from SP1's published hardware requirements (docs.succinct.xyz).
 const stats = [
@@ -10,25 +12,26 @@ const stats = [
 
 export default function Problem() {
   return (
-    <section aria-labelledby="problem-title" className="border-t border-line py-24 md:py-32">
-      <Container>
-        <SectionHeading eyebrow="The problem" titleId="problem-title" title="Writing ZK programs got easy. Proving them didn't.">
-          zkVMs like SP1 let you write provable programs in plain Rust. Generating the proofs still
-          takes expensive hardware, CUDA drivers, job queues and retries — infrastructure every
-          team rebuilds on its own.
-        </SectionHeading>
-
-        <dl className="mt-14 grid gap-px border border-line bg-line md:grid-cols-3">
-          {stats.map(({ value, label }) => (
-            <div key={value} className="flex flex-col bg-page p-8 md:p-10">
-              <dt className="order-2 mt-5 max-w-xs text-base leading-relaxed text-muted-fg">{label}</dt>
-              <dd className="order-1 text-[clamp(3rem,5.4vw,4.5rem)] font-medium leading-none tracking-[-0.03em] text-fg">
-                {value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <p className="mt-4 text-sm text-muted-fg">GPU figures: SP1 hardware requirements, Succinct documentation.</p>
+    <section aria-labelledby="problem-title" className="relative bg-page py-24 text-fg md:py-36">
+      <Container className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="min-w-0">
+          <SectionHeading titleId="problem-title" eyebrow="The problem" title="Writing ZK programs got easy. Proving them didn't.">
+            zkVMs like SP1 let you write provable programs in plain Rust. Generating the proofs still
+            takes expensive hardware, CUDA drivers, job queues and retries — infrastructure every
+            team rebuilds on its own.
+          </SectionHeading>
+          <div className="mt-10 space-y-2.5">
+            {stats.map(({ value, label }, i) => (
+              <Spec key={value} label={value} value={label} hot={i === 2} />
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-muted-fg">GPU figures: SP1 hardware requirements, Succinct documentation.</p>
+        </div>
+        <div className="tone-night flex min-w-0 items-center">
+          <div className="w-full bg-[linear-gradient(#05080d_35%,#5b6472)] p-4 sm:p-8 lg:py-20">
+            <Terminal />
+          </div>
+        </div>
       </Container>
     </section>
   );

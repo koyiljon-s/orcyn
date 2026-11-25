@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import Container from "@/components/layouts/Container";
+import { Blueprint } from "@/components/sections/home/Monolith";
+import { CodeBlock, Dim, Fn, Kw, Ok } from "@/components/sections/home/Panel";
 import SectionHeading from "@/components/sections/home/SectionHeading";
-import { Card, CodeBlock, Dim, Fn, Kw, Ok, type Accent } from "@/components/sections/home/Panel";
 
-const steps: { step: string; accent: Accent; title: string; body: string; visual: ReactNode }[] = [
+const steps: { step: string; title: string; body: string; visual: ReactNode }[] = [
   {
     step: "01",
-    accent: "pink",
     title: "Write your program in Rust",
     body: "Any SP1 program, built with the standard toolchain. No circuits, no new language — just Rust that reads inputs and commits public outputs.",
     visual: (
@@ -38,7 +38,6 @@ const steps: { step: string; accent: Accent; title: string; body: string; visual
   },
   {
     step: "02",
-    accent: "blue",
     title: "Send it to Orcyn",
     body: "Upload the compiled program and its input with one command or one API call. Choose the proof type; we handle the GPUs, queueing and retries.",
     visual: (
@@ -62,7 +61,6 @@ const steps: { step: string; accent: Accent; title: string; body: string; visual
   },
   {
     step: "03",
-    accent: "navy",
     title: "Verify anywhere",
     body: "Every proof is verified on our side before you receive it. Check it again off-chain with the SP1 SDK, or on Ethereum through SP1's verifier contracts.",
     visual: (
@@ -88,21 +86,22 @@ const steps: { step: string; accent: Accent; title: string; body: string; visual
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
-      <Container>
-        <SectionHeading eyebrow="How it works" titleId="how-title" title="From Rust to a proof on Ethereum." />
-
-        <ol className="mt-14 space-y-6">
-          {steps.map(({ step, accent, title, body, visual }) => (
-            <li key={step}>
-              <Card accent={accent} className="grid grid-cols-12 gap-y-8 p-6 sm:p-10 lg:gap-x-12">
-                <div className="col-span-12 min-w-0 lg:col-span-5">
-                  <span className="font-mono text-[13px] text-muted-fg">{step}</span>
-                  <h3 className="mt-4 text-2xl font-medium leading-tight tracking-[-0.03em] text-fg md:text-3xl">{title}</h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted-fg md:text-lg">{body}</p>
-                </div>
-                <div className="col-span-12 min-w-0 lg:col-span-7">{visual}</div>
-              </Card>
+    <section id="how-it-works" aria-labelledby="how-title" className="relative overflow-hidden bg-page py-24 text-fg md:py-36">
+      <Blueprint className="pointer-events-none absolute -right-40 top-10 w-[900px] max-w-none opacity-25" />
+      <Blueprint className="pointer-events-none absolute -left-72 bottom-0 w-[800px] max-w-none opacity-15" />
+      <Container className="relative">
+        <SectionHeading titleId="how-title" eyebrow="How it works" title="From Rust to a proof on Ethereum." />
+        <ol className="mt-16 space-y-6">
+          {steps.map(({ step, title, body, visual }) => (
+            <li key={step} className="grid border border-fg bg-page/85 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+              <div className="p-7 sm:p-10">
+                <span className="inline-flex border border-fg bg-pink px-2.5 py-0.5 text-[13px] text-[#00050a]">{step}</span>
+                <h3 className="mt-6 text-3xl font-normal tracking-[-0.045em] text-fg">{title}</h3>
+                <p className="mt-4 text-[17px] leading-relaxed text-muted-fg">{body}</p>
+              </div>
+              <div className="min-w-0 bg-ink">
+                {visual}
+              </div>
             </li>
           ))}
         </ol>

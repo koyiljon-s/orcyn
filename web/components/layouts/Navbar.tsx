@@ -1,29 +1,29 @@
 import Link from "next/link";
-import Container from "@/components/layouts/Container";
 import Logo from "@/components/layouts/Logo";
 import { sectionLinks } from "@/lib/site";
-import { buttonPrimary } from "@/lib/styles";
 
+/** Pink bar, then a header over the hero: links left, logo centered, call to action right. */
 export default function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-page">
-      <Container className="flex h-16 items-center justify-between gap-2 sm:gap-4 lg:gap-8">
-        <Link href="/" aria-label="Orcyn home">
-          <Logo />
-        </Link>
-
-        <nav aria-label="Primary" className="hidden flex-1 font-medium items-center gap-1 md:flex">
-          {sectionLinks.map(({ label, href }) => (
-            <a key={href} href={href} className="whitespace-nowrap px-2 py-2 text-[15px] lg:px-3 text-muted-fg transition-colors duration-200 hover:text-fg">
-              {label}
-            </a>
-          ))}
-        </nav>
-
-        <a href="#waitlist" className={buttonPrimary}>
-          Get early access <span aria-hidden="true">↗</span>
-        </a>
-      </Container>
-    </header>
+    <div className="relative z-20">
+      <p className="bg-pink px-5 py-2 text-center text-[13px] uppercase text-[#00050a]">Early access · SP1 proving API</p>
+      <header className="tone-night absolute inset-x-0 top-full text-fg">
+        <div className="flex h-16 items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:grid-cols-3">
+          <nav aria-label="Primary" className="order-2 hidden items-center gap-4 md:flex lg:order-1 lg:gap-5">
+            {sectionLinks.map(({ label, href }) => (
+              <a key={href} href={href} className="whitespace-nowrap py-2 text-[13px] uppercase text-fg hover:text-white">
+                {label}
+              </a>
+            ))}
+          </nav>
+          <Link href="/" aria-label="Orcyn home" className="order-1 lg:order-2 lg:justify-self-center">
+            <Logo />
+          </Link>
+          <a href="#waitlist" className="order-3 inline-flex min-h-11 items-center justify-self-end whitespace-nowrap text-[13px] uppercase text-[#ff6fdc] hover:text-white">
+            Get early access
+          </a>
+        </div>
+      </header>
+    </div>
   );
 }

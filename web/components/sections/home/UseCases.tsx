@@ -1,6 +1,5 @@
 import Container from "@/components/layouts/Container";
 import SectionHeading from "@/components/sections/home/SectionHeading";
-import { Card, type Accent } from "@/components/sections/home/Panel";
 
 const useCases = [
   { title: "Rollups & L2s", body: "Prove state transitions and settle on Ethereum with a single Groth16 or Plonk proof." },
@@ -9,27 +8,28 @@ const useCases = [
   { title: "Verifiable compute & zkML", body: "Prove that a specific program or model produced a result, without re-running it." },
 ];
 
-const accents: Accent[] = ["pink", "blue", "navy", "pink"];
-
 export default function UseCases() {
   return (
-    <section id="use-cases" aria-labelledby="use-cases-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
-      <Container>
-        <SectionHeading eyebrow="Use cases" titleId="use-cases-title" title="If it compiles to SP1, Orcyn proves it.">
+    <section
+      id="use-cases"
+      aria-labelledby="use-title"
+      className="tone-sky relative overflow-hidden bg-page py-24 text-fg md:py-36"
+      style={{ backgroundImage: "linear-gradient(#064f86, #0a69ad 60%, #2c86c6)" }}
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-72 blur-2xl" style={{ backgroundImage: "radial-gradient(22% 70% at 12% 100%, rgb(255 255 255 / 0.85), transparent), radial-gradient(26% 90% at 38% 110%, rgb(255 255 255 / 0.8), transparent), radial-gradient(24% 75% at 66% 105%, rgb(255 255 255 / 0.85), transparent), radial-gradient(26% 95% at 92% 108%, rgb(255 255 255 / 0.8), transparent)" }} />
+      <Container className="relative">
+        <SectionHeading titleId="use-title" eyebrow="Use cases" title="If it compiles to SP1, Orcyn proves it.">
           For teams shipping provable software on Ethereum and beyond.
         </SectionHeading>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+        <ul className="mt-16 grid gap-4 sm:grid-cols-2">
           {useCases.map(({ title, body }, i) => (
-            <Card key={title} accent={accents[i]} className="flex flex-col justify-between gap-12 p-8 md:p-10">
-              <span className="font-mono text-[13px] text-muted-fg">0{i + 1}</span>
-              <div>
-                <h3 className="text-2xl font-medium leading-tight tracking-[-0.03em] text-fg md:text-3xl">{title}</h3>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-fg md:text-lg">{body}</p>
-              </div>
-            </Card>
+            <li key={title} className="border border-white/60 bg-[#04365e]/90 p-7 sm:p-9">
+              <span className="text-[13px] text-muted-fg">0{i + 1}</span>
+              <h3 className="mt-8 text-2xl font-normal tracking-[-0.04em] text-white md:text-3xl">{title}</h3>
+              <p className="mt-3 text-[17px] leading-relaxed text-muted-fg">{body}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

@@ -1,28 +1,24 @@
 import Container from "@/components/layouts/Container";
-import { SectionLabel } from "@/components/sections/home/SectionHeading";
+import Planet from "@/components/sections/home/Planet";
 import WaitlistForm from "@/components/sections/home/WaitlistForm";
 
 export default function Waitlist() {
   return (
-    <section id="waitlist" aria-labelledby="waitlist-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
-      <Container className="grid grid-cols-12 items-end gap-y-10 lg:gap-x-12">
-        <div className="col-span-12 min-w-0 lg:col-span-7">
-          <SectionLabel>Early access</SectionLabel>
-          <h2
-            id="waitlist-title"
-            className="mt-6 text-[clamp(2.25rem,5vw,4rem)] font-medium leading-[1.05] tracking-[-0.03em] text-fg"
-          >
-            Building on SP1?
-            <br />
-            Prove with us.
-          </h2>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-fg">
+    <section id="waitlist" aria-labelledby="wait-title" className="tone-night relative bg-page pb-16 pt-24 text-fg md:pt-32">
+      <Planet className="[--planet:380px] lg:[--planet:340px]" />
+      <Container className="relative">
+        <h2 id="wait-title" className="text-[clamp(2.75rem,8vw,7rem)] font-light leading-[0.97] tracking-[-0.06em] text-[#d6eaff]">
+          Building on SP1?
+          <span className="block md:text-right">Prove with us.</span>
+        </h2>
+        <div className="tone-pale mt-60 grid items-end gap-8 lg:mt-64 lg:grid-cols-2 lg:gap-16">
+          <p className="max-w-xl text-lg leading-snug tracking-[-0.02em] text-fg md:text-[22px]">
             We&apos;re onboarding a small group of design partners. Join the list and we&apos;ll reach
             out with access to the proving API.
           </p>
-        </div>
-        <div className="col-span-12 min-w-0 lg:col-span-5">
-          <WaitlistForm source="footer-cta" />
+          <div className="min-w-0">
+            <WaitlistForm source="footer-cta" />
+          </div>
         </div>
       </Container>
     </section>

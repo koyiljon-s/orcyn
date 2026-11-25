@@ -78,7 +78,7 @@ export default function WaitlistForm({ source }: { source: string }) {
           autoComplete="email"
           placeholder="you@company.com"
           aria-describedby={status.kind === "error" ? messageId : undefined}
-          className="min-h-12 min-w-0 flex-1 border border-muted-fg bg-page px-4 text-base text-fg placeholder:text-muted-fg"
+          className="min-h-12 min-w-0 flex-1 border border-fg/50 bg-page/70 px-4 text-base text-fg placeholder:text-muted-fg"
         />
         {/* Honeypot (hidden from people and screen readers) */}
         <input
@@ -92,7 +92,7 @@ export default function WaitlistForm({ source }: { source: string }) {
         <button
           type="submit"
           disabled={submitting}
-          className={`${buttonPrimary} min-h-12 cursor-pointer disabled:cursor-wait disabled:opacity-70`}
+          className={`${buttonPrimary} cursor-pointer disabled:cursor-wait disabled:opacity-70`}
         >
           {submitting ? "Joining…" : "Get early access"}
           {!submitting && <span aria-hidden="true">↗</span>}

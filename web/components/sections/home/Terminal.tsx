@@ -49,7 +49,7 @@ function LineText({ line }: { line: Line }) {
 
 export default function Terminal() {
   return (
-    <figure className="w-full overflow-hidden bg-fg">
+    <figure className="w-full overflow-hidden bg-night">
       <div className="flex items-center gap-2 border-b border-white/15 px-5 py-4" aria-hidden="true">
         <span className="size-2.5 bg-white/25" />
         <span className="size-2.5 bg-white/25" />

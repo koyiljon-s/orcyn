@@ -1,4 +1,5 @@
 import Navbar from "@/components/layouts/Navbar";
+import Grain from "@/components/layouts/Grain";
 import Footer from "@/components/layouts/Footer";
 import Hero from "@/components/sections/home/Hero";
 import Problem from "@/components/sections/home/Problem";
@@ -12,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-clip">
         <Hero />
         <Problem />
         <HowItWorks />
@@ -22,6 +23,7 @@ export default function Home() {
         <Waitlist />
       </main>
       <Footer />
+      <Grain />
     </>
   );
 }

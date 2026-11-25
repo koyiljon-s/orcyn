@@ -1,37 +1,41 @@
 import Container from "@/components/layouts/Container";
-import NetworkDiagram from "@/components/sections/home/NetworkDiagram";
-import { SectionLabel } from "@/components/sections/home/SectionHeading";
-import Terminal from "@/components/sections/home/Terminal";
+import { Monolith } from "@/components/sections/home/Monolith";
+import { Tag } from "@/components/sections/home/Panel";
+import Planet from "@/components/sections/home/Planet";
 import WaitlistForm from "@/components/sections/home/WaitlistForm";
-import { buttonSecondary } from "@/lib/styles";
+import { proofModes } from "@/lib/content";
 
 export default function Hero() {
   return (
-    <section className="pt-32 pb-24 md:pt-40 md:pb-32">
-      <Container className="grid grid-cols-12 items-center gap-y-14 lg:gap-x-12">
-        <div className="col-span-12 min-w-0 lg:col-span-7">
-          <SectionLabel>Early access · SP1 proving API</SectionLabel>
-          <h1 className="mt-7 text-[clamp(2.5rem,5.6vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.03em] text-fg">
-            Zero-knowledge proofs, on demand.
-          </h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-fg md:text-xl">
-            Send an SP1 program and its input. Get back a verified proof — core, compressed,
-            Groth16 or Plonk — without running a GPU cluster.
-          </p>
-          <div className="mt-9 max-w-xl">
-            <WaitlistForm source="hero" />
-          </div>
-          <a href="#how-it-works" className={`mt-4 ${buttonSecondary}`}>
-            See how it works <span aria-hidden="true">→</span>
-          </a>
-        </div>
-        <div className="col-span-12 min-w-0 lg:col-span-5">
-          <NetworkDiagram />
-        </div>
-      </Container>
+    <section className="tone-night relative bg-page text-fg">
+      <Planet className="[--planet:540px] lg:[--planet:430px]" />
 
-      <Container className="mt-20 md:mt-28">
-        <Terminal />
+      <Container className="relative pb-14 pt-28 md:pt-32">
+        <h1 className="text-[clamp(2.75rem,8.4vw,7.5rem)] font-light leading-[0.95] tracking-[-0.06em] text-[#d6eaff]">
+          Zero-knowledge
+          <span className="block md:text-right">proofs, on demand.</span>
+        </h1>
+        <Monolith className="mx-auto mt-2 w-[min(300px,70vw)] md:mt-3 md:w-[350px]" />
+
+        <div className="tone-pale grid items-end gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="min-w-0">
+            <p className="max-w-xl text-lg leading-snug tracking-[-0.02em] text-fg md:text-[22px]">
+              Send an SP1 program and its input. Get back a verified proof — core, compressed,
+              Groth16 or Plonk — without running a GPU cluster.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {proofModes.map(({ name }) => (
+                <Tag key={name}>{name}</Tag>
+              ))}
+            </div>
+          </div>
+          <div className="min-w-0">
+            <WaitlistForm source="hero" />
+            <a href="#how-it-works" className="mt-3 inline-flex min-h-11 items-center gap-2 text-[15px] uppercase text-link underline-offset-4 hover:underline">
+              See how it works <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
       </Container>
     </section>
   );
